@@ -10,106 +10,106 @@ extern "C" {
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
  * Method:    cppCtor
- * Signature: (II)V
+ * Signature: (Ljava/lang/String;II)V
  */
 JNIEXPORT void JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_cppCtor
-(JNIEnv *, jobject, jint, jint);
+  (JNIEnv *, jobject, jstring, jint, jint);
 
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
  * Method:    is_trained
- * Signature: ()Z
+ * Signature: (Ljava/lang/String;)Z
  */
 JNIEXPORT jboolean JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_is_1trained
-        (JNIEnv *, jobject);
+  (JNIEnv *, jobject, jstring);
 
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
  * Method:    train
- * Signature: (I[F)V
+ * Signature: (Ljava/lang/String;I[F)V
  */
 JNIEXPORT void JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_train
-(JNIEnv *, jobject, jint, jfloatArray);
+  (JNIEnv *, jobject, jstring, jint, jfloatArray);
 
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
  * Method:    add
- * Signature: (I[F)V
+ * Signature: (Ljava/lang/String;I[F)I
  */
-JNIEXPORT void JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_add
-(JNIEnv *, jobject, jint, jfloatArray);
+JNIEXPORT jint JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_add
+  (JNIEnv *, jobject, jstring, jint, jfloatArray);
 
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
  * Method:    addWithIds
- * Signature: (I[F[J)V
+ * Signature: (Ljava/lang/String;I[F[J)V
  */
 JNIEXPORT void JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_addWithIds
-(JNIEnv *, jobject, jint, jfloatArray, jlongArray);
+  (JNIEnv *, jobject, jstring, jint, jfloatArray, jlongArray);
 
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
  * Method:    search
- * Signature: (I[FI[F[J)V
+ * Signature: (Ljava/lang/String;I[FI[F[J)I
  */
-JNIEXPORT void JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_search
-(JNIEnv *, jobject, jint, jfloatArray, jint, jfloatArray, jlongArray);
+JNIEXPORT jint JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_search
+  (JNIEnv *, jobject, jstring, jint, jfloatArray, jint, jfloatArray, jlongArray);
 
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
  * Method:    assign
- * Signature: (I[F[II)V
+ * Signature: (Ljava/lang/String;I[F[II)V
  */
 JNIEXPORT void JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_assign
-(JNIEnv *, jobject, jint, jfloatArray, jintArray, jint);
+  (JNIEnv *, jobject, jstring, jint, jfloatArray, jintArray, jint);
 
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
  * Method:    reset
- * Signature: ()V
+ * Signature: (Ljava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_reset
-(JNIEnv *, jobject);
+  (JNIEnv *, jobject, jstring);
 
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
  * Method:    reconstruct
- * Signature: (I[F)V
+ * Signature: (Ljava/lang/String;I[F)V
  */
 JNIEXPORT void JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_reconstruct
-(JNIEnv *, jobject, jint, jfloatArray);
+  (JNIEnv *, jobject, jstring, jint, jfloatArray);
 
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
  * Method:    reconstruct_n
- * Signature: (II[F)V
+ * Signature: (Ljava/lang/String;II[F)V
  */
 JNIEXPORT void JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_reconstruct_1n
-(JNIEnv *, jobject, jint, jint, jfloatArray);
+  (JNIEnv *, jobject, jstring, jint, jint, jfloatArray);
 
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
  * Method:    display
- * Signature: ()V
+ * Signature: (Ljava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_display
-(JNIEnv *, jobject);
+  (JNIEnv *, jobject, jstring);
 
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
  * Method:    compute_residual
- * Signature: ([F[F)V
+ * Signature: (Ljava/lang/String;[F[F)V
  */
 JNIEXPORT void JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_compute_1residual
-(JNIEnv *, jobject, jfloatArray, jfloatArray);
+  (JNIEnv *, jobject, jstring, jfloatArray, jfloatArray);
 
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
  * Method:    get_typename
- * Signature: ()Ljava/lang/String;
+ * Signature: (Ljava/lang/String;)Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_get_1typename
-        (JNIEnv *, jobject);
+  (JNIEnv *, jobject, jstring);
 
 #ifdef __cplusplus
 }
