@@ -1,39 +1,74 @@
-//
-// Created by xtpan on 2018/12/20.
-//
+#include "faiss_jni.h"
 
-#include <ChatbotFaiss.h>
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <jni.h>
+#include <Index.h>
+#include <IndexFlat.h>
+#include <vector>
 
-static int IndexFactory::CreateIndex(IndexType indexType, int dim, int db_size, float* db)
+#include <fstream>
+
+using namespace std;
+using namespace faiss;
+namespace
 {
-    if (indexType != IndexType::FlatL2 || db == null)
-    {
-        printf("not support index type besides FlatL2\n");
-        return -1;
-    }
+    static Index *indexInterface;
+}
 
-    faiss::IndexFlatL2 index(dim);
-    if (index.is_trained == 0)
-    {
-        printf("train status is false\n");
-        return -1;
-    }
-    index.add(db_size, db);
+/*
+ * Class:     faiss_FaissJni
+ * Method:    cppCtor
+ * Signature: (II)V
+ */
+JNIEXPORT void JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_cppCtor
+(JNIEnv *env, jobject obj, jint dim, jint index_type) {
+switch(index_type) {
+case 0:
+indexInterface = new IndexFlat(dim);
+case 1:
+indexInterface = new IndexFlatL2(dim);
+}
+std::cout << ":)!!! jint=" << dim <<std::endl;
+std::cout << "index_type"<< index_type <<std::endl;
+}
 
-    this->m_flat_index = &index;
-    return 0;
-};
+/*
+ * Class:     faiss_FaissJni
+ * Method:    add
+ * Signature: (II)V
+ */
+JNIEXPORT void JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_add
+(JNIEnv *env, jobject obj, jint n, jfloatArray x) {
+jfloat* pbuffer = env->GetFloatArrayElements(x, JNI_FALSE);
+indexInterface->add(n, pbuffer);
+env->ReleaseFloatArrayElements(x, pbuffer, 0);
+}
 
-static void IndexFactory::Search(IndexType indexType, float* query, float* kb_index_array, int query_size, int recall_size, int probe_size=1)
-{
-    if (indexType != IndexType::FlatL2 || query == null || kb_index_array == null)
-    {
-        printf("not support index type besides FlatL2\n");
-        return -1;
-    }
-    float* D = new float[recall_size * query_size];
-    this->m_flat_index.search(query_size, query, recall_size, D, kb_index_array);
+/*
+ * Class:     faiss_FaissJni
+ * Method:    search
+ * Signature: (II)V
+ */
+JNIEXPORT void JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_search
+(JNIEnv *env, jobject obj, jint n, jfloatArray x, jint k, jfloatArray distances, jlongArray labels) {
+jfloat* pxq = env->GetFloatArrayElements(x, JNI_FALSE);
+jfloat* pres = env->GetFloatArrayElements(distances, JNI_FALSE);
+jlong* plindex = env->GetLongArrayElements(labels, JNI_FALSE);
 
-    delete I, D;
-    return 0;
-};
+indexInterface->search(n, pxq, k, pres, plindex);
+env->ReleaseFloatArrayElements(x, pxq, 0);
+env->ReleaseFloatArrayElements(distances, pres, 0);
+env->ReleaseLongArrayElements(labels, plindex, 0);
+}
+
+/*
+ * Class:     faiss_FaissJni
+ * Method:    is_trained
+ * Signature: (II)V
+ */
+JNIEXPORT jboolean JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_is_1trained
+        (JNIEnv *env, jobject obj) {
+return indexInterface->is_trained;
+}
