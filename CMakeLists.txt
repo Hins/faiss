@@ -37,7 +37,7 @@ file(GLOB faiss_cpu_headers ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 file(GLOB faiss_cpu_cpp ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
 set(faiss_lib faiss)
-add_library(${faiss_lib} STATIC ${faiss_cpu_headers} ${faiss_cpu_cpp})
+add_library(${faiss_lib} STATIC ${faiss_cpu_headers} ${faiss_cpu_cpp} index_manager.h index_manager.cpp)
 target_link_libraries(${faiss_lib} ${OpenMP_CXX_FLAGS} ${BLAS_LIB})
 
 # build gpu lib

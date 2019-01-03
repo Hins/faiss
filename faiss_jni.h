@@ -17,10 +17,10 @@ JNIEXPORT void JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_cpp
 
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
- * Method:    is_trained
+ * Method:    isTrained
  * Signature: (Ljava/lang/String;)Z
  */
-JNIEXPORT jboolean JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_is_1trained
+JNIEXPORT jboolean JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_isTrained
   (JNIEnv *, jobject, jstring);
 
 /*
