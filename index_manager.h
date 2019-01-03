@@ -1,5 +1,5 @@
 //
-// Created by xtpan on 2019/1/3.
+// Created by xtpan on 2018/12/26.
 //
 
 #ifndef FAISS_INDEX_MANAGER_H
