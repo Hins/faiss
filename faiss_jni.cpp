@@ -22,7 +22,7 @@ using namespace faiss;
  * Signature: (II)V
  */
 JNIEXPORT void JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_cppCtor
-(JNIEnv *env, jobject obj, jstring group, jint dim, jint index_type) {
+(JNIEnv *env, jobject obj, jstring group, jint dim, jint index_type, jobject kbIndexMap, jobject trainIndexList) {
     string sGroup = env->GetStringUTFChars(group, 0);
     IndexManager* pinstance = IndexManager::CreateInstance();
     pinstance->DelMapKeyFlatL2(sGroup);

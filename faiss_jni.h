@@ -10,10 +10,10 @@ extern "C" {
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
  * Method:    cppCtor
- * Signature: (Ljava/lang/String;II)V
+ * Signature: (Ljava/lang/String;ILjava/util/Map;Ljava/util/List;)V
  */
 JNIEXPORT void JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_cppCtor
-  (JNIEnv *, jobject, jstring, jint, jint);
+  (JNIEnv *, jobject, jstring, jint, jobject, jobject);
 
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
@@ -50,10 +50,10 @@ JNIEXPORT void JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_add
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
  * Method:    search
- * Signature: (Ljava/lang/String;I[FI[F[J)I
+ * Signature: (Ljava/lang/String;I[FI[F[Ljava/lang/String;)I
  */
 JNIEXPORT jint JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_search
-  (JNIEnv *, jobject, jstring, jint, jfloatArray, jint, jfloatArray, jlongArray);
+  (JNIEnv *, jobject, jstring, jint, jfloatArray, jint, jfloatArray, jobjectArray);
 
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI

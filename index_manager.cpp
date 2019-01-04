@@ -15,6 +15,15 @@ IndexManager* IndexManager::pInstance_ = nullptr;
 IndexManager::IndexManager() {}
 
 IndexManager::~IndexManager() {
+    for (auto iter : index_map) {
+        string* kbs = nullptr;
+        kbs = iter.second;
+        if (kbs != nullptr) {
+            delete kbs;
+            kbs = nullptr;
+        }
+        index_map.erase(iter.first);
+    }
     for (auto iter : flatl2_map_) {
         faiss::IndexFlatL2* pindex = nullptr;
         pindex = iter.second;
@@ -68,6 +77,36 @@ int IndexManager::ReleaseInstance() {
         return 1;
     }
     return 0;
+}
+
+long long IndexManager::SetMapKeyKB(string key, map<string, string>& kb) {
+    kb_map[key] = kb;
+    return false;
+}
+
+bool IndexManager::DelMapKeyKB(string key) {
+    if (kb_map.size() < 1)
+        return true;
+    auto iter = kb_map.find(key);
+    if (iter == kb_map.end())
+        return true;
+    kb_map.erase(key);
+    return false;
+}
+
+long long IndexManager::SetListKeyKB(string key, string* kb) {
+    index_map[key] = kb;
+    return false;
+}
+
+bool IndexManager::DelListKeyKB(string key) {
+    if (index_map.size() < 1)
+        return true;
+    auto iter = index_map.find(key);
+    if (iter == index_map.end())
+        return true;
+    index_map.erase(key);
+    return false;
 }
 
 long long IndexManager::GetMapSizeFlatL2() { return flatl2_map_.size(); }
