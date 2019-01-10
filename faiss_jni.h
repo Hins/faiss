@@ -10,10 +10,10 @@ extern "C" {
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
  * Method:    cppCtor
- * Signature: (Ljava/lang/String;ILjava/util/Map;Ljava/util/List;)V
+ * Signature: (Ljava/lang/String;I)V
  */
 JNIEXPORT void JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_cppCtor
-  (JNIEnv *, jobject, jstring, jint, jobject, jobject);
+  (JNIEnv *, jobject, jstring, jint);
 
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
@@ -46,6 +46,38 @@ JNIEXPORT jint JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_add
  */
 JNIEXPORT void JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_addWithIds
   (JNIEnv *, jobject, jstring, jint, jfloatArray, jlongArray);
+
+/*
+ * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
+ * Method:    setMapKeyKB
+ * Signature: (Ljava/lang/String;Ljava/util/Map;)Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_setMapKeyKB
+  (JNIEnv *, jobject, jstring, jobject);
+
+/*
+ * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
+ * Method:    delMapKeyKB
+ * Signature: (Ljava/lang/String;)Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_delMapKeyKB
+  (JNIEnv *, jobject, jstring);
+
+/*
+ * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
+ * Method:    setListKeyKB
+ * Signature: (Ljava/lang/String;Ljava/util/ArrayList;)Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_setListKeyKB
+  (JNIEnv *, jobject, jstring, jobject);
+
+/*
+ * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI
+ * Method:    delListKeyKB
+ * Signature: (Ljava/lang/String;)Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_xiaomi_chatbot_services_faiss_model_FaissJNI_delListKeyKB
+  (JNIEnv *, jobject, jstring);
 
 /*
  * Class:     com_xiaomi_chatbot_services_faiss_model_FaissJNI

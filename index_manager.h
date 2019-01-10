@@ -6,6 +6,7 @@
 #define FAISS_INDEX_MANAGER_H
 
 #include <string>
+#include <vector>
 #include <map>
 
 using namespace std;
@@ -25,10 +26,11 @@ public:
     ~IndexManager();
 
 public:
-    long long SetMapKeyKB(string key, map<string, string>& kb);
+    long long SetMapKeyKB(string key, const map<string, string>& kb);
     bool DelMapKeyKB(string key);
-    long long SetListKeyKB(string key, string* kb);
+    long long SetListKeyKB(string key, const vector<string>& kb);
     bool DelListKeyKB(string key);
+    string GetKBStanQ(string key, int index);
 
 public:
     long long GetMapSizeFlatL2();
@@ -51,7 +53,7 @@ public:
 private:
     static IndexManager *pInstance_;
     std::map<string, map<string, string> > kb_map;
-    std::map<string, string*> index_map;
+    std::map<string, vector<string> > index_map;
     std::map<string, faiss::IndexFlatL2 *> flatl2_map_;
     std::map<string, faiss::IndexIVFFlat *> ivfflat_map_;
     std::map<string, faiss::IndexIVFPQ *> ivfpq_map_;
