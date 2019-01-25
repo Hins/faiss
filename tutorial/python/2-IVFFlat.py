@@ -12,7 +12,7 @@ import json as js
 import time
 import math
 
-corpus_obj = js.loads(open('./data/kmQuery.json.20181218').read())['data']
+corpus_obj = js.loads(open('./data/kmQuery.json').read())['data']
 kb = {}               # key is knowledge id, values is knowledge text list, including standard and similarity questions
 kb_stan = {}
 for item in corpus_obj:
@@ -70,30 +70,38 @@ import faiss
 
 def FlatL2Index():
     index = faiss.IndexFlatL2(dim_size)
+    index.metric_type = faiss.METRIC_INNER_PRODUCT
     assert index.is_trained
     index.add(index_kb)
 
-    file = open('./data.20181219/flagL2.dat', 'w')
+    file = open('./data/flagL2.dat', 'w')
     start_time = time.time()
+    '''
     D, I = index.search(query_list[:1], recall_size)
     print("FlatL2 index %s seconds" % (time.time() - start_time))
+    '''
     D, I = index.search(query_list, recall_size)     # actual search
+    print(D)
     correct_counter = 0
     for idx, recall_list in enumerate(I):
+        file.write(revised_query_list[idx] + '\n')
+        file.write('####'.join([kb_query_list[item] for item in recall_list]) + '\n')
+        '''
         if len(np.intersect1d(recall_list, np.array(label[idx], dtype=np.int32))) > 0:
             correct_counter += 1
         else:
             file.write(revised_query_list[idx] + '\t' + '####'.join(kb[label_kid_list[idx]]) + '\t' + '####'.join([kb_query_list[int(item)] for item in recall_list]) + '\n')
-    print("FlatL2 precision is %f" % (float(correct_counter) / float(query_size)))
+        '''
+    #print("FlatL2 precision is %f" % (float(correct_counter) / float(query_size)))
     file.close()
-#FlatL2Index()
+FlatL2Index()
 
 def FlatL2Index_kb():
     index = faiss.IndexFlatL2(dim_size)
     assert index.is_trained
     index.add(index_kb)
 
-    file = open('./data.20181219/flagL2.dat', 'w')
+    file = open('./data/flagL2.dat', 'w')
     start_time = time.time()
     D, I = index.search(query_list[:1], recall_size)
     print("FlatL2 index %s seconds" % (time.time() - start_time))
@@ -120,12 +128,12 @@ def FlatL2Index_kb():
     print("FlatL2 precision is %f" % (float(correct_counter) / float(query_size)))
     file.close()
     '''
-FlatL2Index_kb()
+#FlatL2Index_kb()
 
 def IVFFlatIndex():
     nlist = int(math.sqrt(train_size))    # number of clusters
     quantizer = faiss.IndexFlatL2(dim_size)  # store cluster center-ids
-    index = faiss.IndexIVFFlat(quantizer, dim_size, nlist, faiss.METRIC_L2)
+    index = faiss.IndexIVFFlat(quantizer, dim_size, nlist, faiss.METRIC_INNER_PRODUCT)
     # here we specify METRIC_L2, by default it performs inner-product search, or faiss.METRIC_INNER_PRODUCT
 
     assert not index.is_trained
@@ -135,26 +143,30 @@ def IVFFlatIndex():
 
     D, I = index.search(query_list, recall_size)     # actual search
 
+    '''
     correct_counter = 0
     for idx, recall_list in enumerate(I):
         if len(np.intersect1d(recall_list, np.array(label[idx], dtype=np.int32))) > 0:
             correct_counter += 1
     print("IVFFlat index probe 1 precision is %f" % (float(correct_counter) / float(query_size)))
+    '''
     index.nprobe = index_probe               # default nprobe is 1, try a few more
     start_time = time.time()
-    D, I = index.search(query_list[:1], recall_size)
-    print("IVFFlat index %s seconds" % (time.time() - start_time))
     D, I = index.search(query_list, recall_size)
     correct_counter = 0
-    file = open('./data.20181219/IVFFlat.dat', 'w')
+    file = open('./data/IVFFlat.dat', 'w')
     for idx, recall_list in enumerate(I):
+        file.write(revised_query_list[idx] + '\n')
+        file.write('####'.join([kb_query_list[item] for item in recall_list]) + '\n')
+        '''
         if len(np.intersect1d(recall_list, np.array(label[idx], dtype=np.int32))) > 0:
             correct_counter += 1
         else:
             file.write(revised_query_list[idx] + '\t' + '####'.join(kb[label_kid_list[idx]]) + '\t' + '####'.join([kb_query_list[int(item)] for item in recall_list]) + '\n')
+        '''
     file.close()
-    print("IVFFlat index probe %d precision is %f" % (index_probe, float(correct_counter) / float(query_size)))
-#IVFFlatIndex()
+    #print("IVFFlat index probe %d precision is %f" % (index_probe, float(correct_counter) / float(query_size)))
+IVFFlatIndex()
 
 def IVFPQIndex():
     nlist = 50    # coarse-grained cluster size

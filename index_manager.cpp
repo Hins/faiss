@@ -120,6 +120,7 @@ long long IndexManager::GetMapSizeFlatL2() { return flatl2_map_.size(); }
 
 long long IndexManager::SetMapKeyFlatL2(string key, int ivec) {
     faiss::IndexFlatL2* pindex = new faiss::IndexFlatL2(ivec);
+    pindex->metric_type = faiss::METRIC_INNER_PRODUCT;
     if (pindex == nullptr)
         return -1;
     flatl2_map_.insert(std::make_pair(key, pindex));
